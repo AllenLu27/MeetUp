@@ -7,12 +7,22 @@
         </v-btn>
       </v-flex>
       <v-flex xs12 sm6 class="text-xs-center text-sm-right">
-        <v-btn large router to="/meetups/new" class = "primary">
+        <v-btn large router to="/meetup/new" class = "primary">
           Organize Meetup
         </v-btn>
       </v-flex>
     </v-layout>
-    <v-layout row wrap class = "mb-2">
+    <v-layout>
+      <v-flex xs12 class="text-center">
+        <v-progress-circular
+          indeterminate
+          color="red"
+          :width="7"
+          :size="70"
+          v-if="loading"></v-progress-circular>
+      </v-flex>
+    </v-layout>
+    <v-layout row wrap class = "mt-2" v-if="!loading">
       <v-flex xs12>
       <v-carousel cycle>
         <v-carousel-item
@@ -43,6 +53,9 @@
     computed:{
       meetups() {
         return this.$store.getters.featuredMeetups
+      },
+      loading(){
+        return this.$store.getters.loading
       }
     },
     methods:{
@@ -58,7 +71,7 @@
   .title{
     position: absolute;
     bottom: 50px;
-    left: 350px;
+    left: 450px;
     background-color: rgba(0,0,0,0.5);
     color: white;
   }

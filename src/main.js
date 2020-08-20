@@ -7,10 +7,12 @@ import 'material-design-icons-iconfont/dist/material-design-icons.css';
 import { store } from './store'
 import DateFilter from './filters/date'
 import AlertCmp from './components/Shared/Alert.vue'
+import EditMeetupDetailsDialog from './components/Meetup/Edit/EditMeetupDetailsDialog.vue'
 Vue.config.productionTip = false
 
 Vue.filter('date', DateFilter)
 Vue.component('app-alert', AlertCmp)
+Vue.component('app-edit-meetup-details-dialog', EditMeetupDetailsDialog)
 
 new Vue({
   router,
@@ -25,5 +27,11 @@ new Vue({
       projectId: 'meetup-da675',
       storageBucket: "meetup-da675.appspot.com",
     })
+    firebase.auth().onAuthStateChanged((user)=>{
+      if(user){
+        this.$store.dispatch('autoSignIn', user)
+      }
+    })
+    this.$store.dispatch('loadMeetups')
   }
 }).$mount('#app')
